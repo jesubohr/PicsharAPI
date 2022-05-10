@@ -1,0 +1,38 @@
+{
+  "name": "picshar-api",
+  "version": "1.0.0",
+  "description": "An API to work with an Instragram/Twitter clone",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src",
+    "dev": "nodemon src",
+    "test": "jest --watchAll --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesubohr/PicsharAPI.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "Jesus Borrero",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jesubohr/PicsharAPI/issues"
+  },
+  "homepage": "https://github.com/jesubohr/PicsharAPI#readme",
+  "devDependencies": {
+    "@types/jest": "27.5.0",
+    "@types/jsonwebtoken": "8.5.8",
+    "jest": "28.1.0",
+    "nodemon": "2.0.16"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.5",
+    "dotenv": "16.0.0",
+    "express": "4.18.1",
+    "jsonwebtoken": "8.5.1",
+    "mongoose": "6.3.3"
+  }
+}
