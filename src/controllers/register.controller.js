@@ -4,7 +4,7 @@ async function RegisterUser (req, res) {
     const { name, birthday, email, password } = req.body;
 
     if (!name || !birthday || !email || !password) {
-        return res.status(400).json({ message: 'Please fill all the fields' });
+        return res.status(400).json({ msg: 'Please fill all the fields' });
     }
 
     const user = await User.findOne({ email });

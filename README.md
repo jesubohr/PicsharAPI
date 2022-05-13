@@ -2,10 +2,10 @@
 
 ## Endpoints
 
-- [ ] Endpoint de login con usuario y contraseña
+- [x] Endpoint de login con usuario y contraseña
   - Debe generar un JWT de sesión
-- [ ] Endpoint de login con JWT token
-- [ ] Endpoint de registro de usuario
+- [x] Endpoint de login con JWT token
+- [x] Endpoint de registro de usuario
 
 
 - [ ] Endpoint de informacion de usuario
