@@ -1,35 +1,23 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
 
+const JWT_SIGN = (payload) => [
+    { sub: payload._id },
+    process.env.JWT_SECRET,
+    { algorithm: 'HS512', expiresIn: '5m' },
+];
+
 async function WithEmailAndPassword (req, res) {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'User not found' });
+    if (!user) return res.status(400).json({ error: 'User not found' });
 
     const isMatch = await user.matchPassword(password);
-    if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-    const token = jwt.sign(
-        { id: user._id },
-        process.env.JWT_SECRET,
-        { algorithm: 'HS512', expiresIn: '5m' }
-    );
+    const token = jwt.sign(...JWT_SIGN(user));
     res.json({ token });
 }
 
-async function WithToken (req, res) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ msg: 'Token not provided' });
-
-    const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
-    if (!decoded) return res.status(401).json({ msg: 'Token invalid' });
-
-    const user = await User.findById(decoded.id);
-    if (!user) return res.status(400).json({ msg: 'User not found' });
-
-    req.user = decoded;
-    res.json({ _id: user._id });
-}
-
-module.exports = { WithEmailAndPassword, WithToken };
+module.exports = { WithEmailAndPassword };
