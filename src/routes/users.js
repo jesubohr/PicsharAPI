@@ -1,7 +1,14 @@
 const router = require('express').Router();
-const { authWithToken } = require('../middleware/auth');
-const { getUserInfo } = require('../controllers/user.controller');
+const { LoginToken, LoginUser, RegisterUser } = require('../controllers/auth.controller');
+const { UserInfo } = require('../controllers/user.controller');
 
-router.get('/', authWithToken, getUserInfo);
+router.get('/', UserInfo);
+
+router.post('/', RegisterUser);
+router.post('/login', (req, res) => {
+    const { token } = req.body;
+    if (!token) LoginUser(req, res);
+    else LoginToken(req, res);
+});
 
 module.exports = router;
