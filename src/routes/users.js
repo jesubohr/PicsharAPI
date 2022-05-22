@@ -1,2 +1,7 @@
 const router = require('express').Router();
-const UserController = require('../controllers/user.controller');
+const { authWithToken } = require('../middleware/auth');
+const { getUserInfo } = require('../controllers/user.controller');
+
+router.get('/', authWithToken, getUserInfo);
+
+module.exports = router;
