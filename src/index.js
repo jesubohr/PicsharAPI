@@ -1,20 +1,11 @@
-const express = require('express');
-const cors = require('cors');
+const createServer = require('./server');
 require('dotenv').config();
-
-const PORT = process.env.PORT || 5000;
-const app = express();
 require('./database');
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-
-// Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
+const PORT = process.env.PORT || 5000;
 
 // Server
-app.listen(PORT, () => {
+const server = createServer();
+server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
