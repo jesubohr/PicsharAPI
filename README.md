@@ -3,18 +3,18 @@ Backend para un clon de Twitter + Instagram.
 
 ## Endpoints
 
-- [ ] Endpoint de login con usuario y contraseña
+- [x] Endpoint de login con usuario y contraseña
   - Debe generar un JWT de sesión
   - Metodo: POST
   - Ruta: '/users/login'
   - Body: { username, password }
   - Response: { token }
-- [ ] Endpoint de login con JWT token
+- [x] Endpoint de login con JWT token
   - Metodo: POST
   - Ruta: '/users/login'
   - Body: { token }
   - Response: {}
-- [ ] Endpoint de registro de usuario
+- [x] Endpoint de registro de usuario
   - Debe generar un JWT de sesión
   - Metodo: POST
   - Ruta: '/users/'
@@ -119,13 +119,13 @@ Backend para un clon de Twitter + Instagram.
 
 ## Pruebas Unitarias (Jest)
 
-- [ ] Login
-  - [ ] Informacion valida
-  - [ ] Informacion invalida (usuario no existe)
-  - [ ] Informacion invalida (contraseña incorrecta)
-- [ ] Registro
-  - [ ] Informacion completa
-  - [ ] Informacion incompleta
+- [x] Login
+  - [x] Informacion valida
+  - [x] Informacion invalida (usuario no existe)
+  - [x] Informacion invalida (contraseña incorrecta)
+- [x] Registro
+  - [x] Informacion completa
+  - [x] Informacion incompleta
 
 
 - [ ] Informacion de Usuario
