@@ -46,8 +46,8 @@ UserSchema.methods.encryptPassword = async (password) => {
     return await bycrypt.hash(password, salt);
 };
 
-UserSchema.methods.matchPassword = async (password) => {
+UserSchema.methods.matchPassword = async function (password) {
     return await bycrypt.compare(password, this.password);
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.models['User'] || mongoose.model('User', UserSchema);
