@@ -14,7 +14,7 @@ async function authWithToken (req, res, next) {
     const decoded = verifyToken(authHeader);
     if (!decoded) return res.status(401).json({ error: 'Invalid token' });
     if (decoded instanceof Error) return res.status(401).json({ error: 'Invalid token' });
-
+    req.user = decoded.sub
     next();
 }
 
