@@ -1,10 +1,10 @@
 const Post = require('../models/Post.model');
 
 async function CreatePost (req, res) {
-    const { title, content, image, owner } = req.body;
-    if(!title || !content || !owner || !image) return res.status(400).json({ error: 'You must fill all the fields' });
+    const {bio, image_url, author } = req.body;
+    if(!bio || !image_url || !author) return res.status(400).json({ error: 'You must fill all the fields' });
     try {
-        const post = await Post.create({ title, content, image, owner });
+        const post = await Post.create({ bio, image_url, author });
         res.json({ post });
     } catch (error) {
         res.status(500).json({ error: 'Invalid post', stack: error });
@@ -39,9 +39,9 @@ async function LikePost (req, res) {
 
 async function PostLikedBy(req, res){
     const { user_id } = req.query;
-    if(!user_id) return res.status(400).json({ error: 'You must fill all the fields' });
     try {
         const posts = await Post.filter(post => post.likes.includes(user_id));
+        console.log(posts)
         res.json({ posts });
     } catch (error) {
         res.status(500).json({ error: 'Invalid user', stack: error });

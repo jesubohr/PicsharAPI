@@ -2,18 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-    title: {
+    bio: {
         type: String,
         required: true
     },
-    content: {
-        type: String,
-        required: true
-    },
-    image: {
+    image_url: {
         type: String
     },
-    owner: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
