@@ -22,27 +22,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    requests: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    acceptedRequests: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    deniedRequests: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    savedPosts: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Post'
-    }],
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
+    }
 }, { timestamps: true });
 
 UserSchema.methods.encryptPassword = async (password) => {
