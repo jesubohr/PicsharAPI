@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const SavedPost = new Schema({
-    user : {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    post : {
+    post: {
         type: Schema.Types.ObjectId,
         ref: 'Post'
     },

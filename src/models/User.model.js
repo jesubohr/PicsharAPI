@@ -22,7 +22,11 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    canSeeLikes: {
+        type: Boolean,
+        default: true
+    },
 }, { timestamps: true });
 
 UserSchema.methods.encryptPassword = async (password) => {

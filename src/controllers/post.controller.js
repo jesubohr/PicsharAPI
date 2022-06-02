@@ -1,5 +1,4 @@
 const Post = require('../models/Post.model');
-const User = requie('../models/User.model');
 
 async function CreatePost (req, res) {
     const { title, content, image, owner } = req.body;
@@ -16,7 +15,7 @@ async function FindPosts(req, res){
     const {author} = req.query;
     const user_id = req.user;
     try {
-        
+
         const posts = await Post.find({owner : author});
         res.json({ posts });
     } catch (error) {

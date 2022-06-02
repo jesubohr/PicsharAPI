@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const AcceptedRequestSchema = new Schema({
-    userOrigin : {
+const FollowSchema = new Schema({
+    follower: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    userDestination : {
+    followed: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model('AcceptedRequest', AcceptedRequestSchema);
+module.exports = mongoose.model('Follow', FollowSchema);

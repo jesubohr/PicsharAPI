@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const DeniedRequestSchema = new Schema({
-    userOrigin: {
+const LikedPostSchema = new Schema({
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    userDestination: {
+    post: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Post'
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model('DeniedRequest', DeniedRequestSchema);
+module.exports = mongoose.model('LikedPost', LikedPostSchema);

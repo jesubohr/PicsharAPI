@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const {CreatePost, FindPosts, LikePost, PostLikedBy} = require('../controllers/post.controller');
-const {authWithToken} = require('../middleware/auth');
+const { CreatePost, FindPosts, LikePost, PostLikedBy } = require('../controllers/post.controller');
+const { authWithToken } = require('../middleware/auth');
 
 router.post('/', CreatePost);
 router.get('/', authWithToken, FindPosts)
