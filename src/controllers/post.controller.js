@@ -2,6 +2,7 @@ const Post = require('../models/Post.model');
 const Comment = require('../models/Comment.model');
 const SavedPost = require('../models/SavedPost.model');
 const LikedPost = require('../models/LikedPost.model');
+const Follow = require('../models/Follow.model');
 
 async function CreatePost (req, res) {
     const {bio, image_url, author } = req.body;
@@ -94,10 +95,21 @@ async function SavePost(req, res){
     }
 }
 
+async function GetTimeline(req, res){
+    const {user_id} = req.body
+    try {
+        const follows = await Follow.find({follower: user_id});
+        const posts = await Post.find({author: {$in: follows.map(follow => follow.followed)}});
+        res.json({ posts });
+    }catch (error) {
+        res.status(500).json({ error: 'Invalid user', stack: error });
+    }
+}
+
 async function GetPostRouter(req, res){
     const {post_id} = req.query;
     if(post_id) return GetPost(req, res);
     FindPosts(req, res);
 }
 
-module.exports = { CreatePost, FindPosts, LikePost, PostLikedBy, CommentPost, SavePost, GetPost, GetPostRouter, PostSavedBy};
+module.exports = { CreatePost, LikePost, PostLikedBy, CommentPost, SavePost, GetPostRouter, PostSavedBy, GetTimeline};
