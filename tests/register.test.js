@@ -17,7 +17,6 @@ describe('Register', () => {
     });
 
     afterAll(async () => {
-        await User.deleteMany();
         await mongoose.connection.close();
     });
 
