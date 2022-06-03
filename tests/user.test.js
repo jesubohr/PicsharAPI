@@ -159,7 +159,7 @@ describe('User Information', () => {
     }); */
 
 
-    /* it('like a post', async () => {
+    it('like a post', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -193,9 +193,9 @@ describe('User Information', () => {
             .send({ post_id: res3.body.post._id });
         expect(res4.statusCode).toBe(200);
         expect(res4.body).toHaveProperty('like');
-    }); */
+    });
 
-    /* it('liked posts of user', async () => {
+    it('liked posts of user', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -209,10 +209,10 @@ describe('User Information', () => {
             .query({ user_id: decoded.sub });
         expect(res2.statusCode).toBe(200);
         expect(res2.body).toHaveProperty('posts');
-    }); */
+    });
 
 
-    /* it('save a post', async () => {
+    it('save a post', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -238,9 +238,9 @@ describe('User Information', () => {
             .send({ post_id: res2.body.post._id });
         expect(res3.statusCode).toBe(200);
         expect(res3.body).toHaveProperty('savedPost');
-    }); */
+    });
 
-    /* it('saved posts of user', async () => {
+    it('saved posts of user', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -254,10 +254,10 @@ describe('User Information', () => {
             .query({ user_id: decoded.sub });
         expect(res2.statusCode).toBe(200);
         expect(res2.body).toHaveProperty('posts');
-    }); */
+    });
 
 
-    /* it('comment on a post', async () => {
+    it('comment on a post', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -281,9 +281,9 @@ describe('User Information', () => {
             .send({ post_id: res2.body.post._id, comment: 'test comment' });
         expect(res3.statusCode).toBe(200);
         expect(res3.body).toHaveProperty('comment');
-    }); */
+    });
 
-    /* it('comments on a post', async () => {
+    it('comments on a post', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };
         const res = await request(server)
             .post('/users/login')
@@ -315,5 +315,5 @@ describe('User Information', () => {
         expect(res4.statusCode).toBe(200);
         expect(res4.body).toHaveProperty('comments');
         expect(res4.body.comments).toHaveLength(1);
-    }); */
+    });
 });
