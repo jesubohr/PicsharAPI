@@ -8,7 +8,7 @@ module.exports = {
     // automock: false,
 
     // Stop running tests after `n` failures
-    // bail: 0,
+    // bail: 3,
 
     // The directory where Jest should store its cached dependency information
     // cacheDirectory: "C:\\Users\\Jesus Borrero\\AppData\\Local\\Temp\\jest",
@@ -140,7 +140,7 @@ module.exports = {
     // setupFilesAfterEnv: [],
 
     // The number of seconds after which a test is considered as slow and reported as such in the results.
-    // slowTestThreshold: 5,
+    // slowTestThreshold: 10,
 
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
     // snapshotSerializers: [],

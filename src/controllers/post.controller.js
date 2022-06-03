@@ -78,7 +78,7 @@ async function CommentPost(req, res){
     const user_id = post.author;
     try {
         const com = await Comment.create({ content: comment, owner: user_id, post: post_id });
-        res.json({ com });
+        res.json({ comment: com });
     }catch (error) {
         res.status(500).json({ error: 'Invalid Comment', stack: error });
     }
@@ -112,4 +112,10 @@ async function GetPostRouter(req, res){
     FindPosts(req, res);
 }
 
-module.exports = { CreatePost, LikePost, PostLikedBy, CommentPost, SavePost, GetPostRouter, PostSavedBy, GetTimeline};
+async function PostPostRouter(req, res){
+    const {post_id} = req.body;
+    if(post_id) return CommentPost(req, res);
+    CreatePost(req, res);
+}
+
+module.exports = { PostPostRouter, LikePost, PostLikedBy, SavePost, GetPostRouter, PostSavedBy, GetTimeline};

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src",
     "dev": "nodemon src",
-    "test": "jest --verbose"
+    "test": "jest --verbose --forceExit"
   },
   "repository": {
     "type": "git",

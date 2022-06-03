@@ -55,7 +55,7 @@ async function RequestFollow(req, res) {
     try {
         const newRequest = new Request({ userOrigin: this_user, userDestination: user_id });
         await newRequest.save();
-        return res.status(200).json({ message: 'request sent' });
+        return res.status(200).json({ request: newRequest._id });
     } catch (error) {
         return res.status(500).json({ error: 'Invalid user_id', stack: error });
     }

@@ -17,6 +17,7 @@ describe('Register', () => {
     });
 
     afterAll(async () => {
+        await User.deleteOne({ username: 'elonmusk' });
         await mongoose.connection.close();
     });
 
