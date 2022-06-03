@@ -1,4 +1,7 @@
 const Post = require('../models/Post.model');
+const Comment = require('../models/Comment.model');
+const SavedPost = require('../models/SavedPost.model');
+const LikedPost = require('../models/LikedPost.model');
 
 async function CreatePost (req, res) {
     const {bio, image_url, author } = req.body;
@@ -13,10 +16,8 @@ async function CreatePost (req, res) {
 
 async function FindPosts(req, res){
     const {author} = req.query;
-    const user_id = req.user;
     try {
-
-        const posts = await Post.find({owner : author});
+        const posts = await Post.find({author: author});
         res.json({ posts });
     } catch (error) {
         res.status(500).json({ error: 'Invalid user', stack: error });
@@ -26,14 +27,11 @@ async function FindPosts(req, res){
 async function LikePost (req, res) {
     const { post_id} = req.body;
     const user_id = req.user;
-    if(!post_id) return res.status(400).json({ error: 'You must fill all the fields' });
+    const alreadyLiked = await LikedPost.findOne({ user: user_id, post: post_id });
+    if(alreadyLiked) return res.status(400).json({ error: 'You already liked this post' });
     try {
-        const post = await Post.findById(post_id);
-        if(!post) return res.status(400).json({ error: 'Invalid post' });
-        if(post.likes.includes(user_id)) return res.status(400).json({ error: 'You already liked this post' });
-        post.likes.push(user_id);
-        await post.save();
-        res.json({ post });
+       const like = await LikedPost.create({ user: user_id, post: post_id });
+        res.json({ like });
     } catch (error) {
         res.status(500).json({ error: 'Invalid post', stack: error });
     }
@@ -42,12 +40,64 @@ async function LikePost (req, res) {
 async function PostLikedBy(req, res){
     const { user_id } = req.query;
     try {
-        const posts = await Post.filter(post => post.likes.includes(user_id));
-        console.log(posts)
+        const likedPosts = await LikedPost.find({user : user_id});
+        const posts = await Post.find({_id: {$in: likedPosts.map(post => post.post)}});
         res.json({ posts });
     } catch (error) {
         res.status(500).json({ error: 'Invalid user', stack: error });
     }
 }
 
-module.exports = { CreatePost, FindPosts, LikePost, PostLikedBy};
+async function PostSavedBy(req, res){
+    const { user_id } = req.query;
+    try {
+        const savedPosts = await SavedPost.find({user : user_id});
+        const posts = await Post.find({_id: {$in: savedPosts.map(post => post.post)}});
+        res.json({ posts });
+    } catch (error) {
+        res.status(500).json({ error: 'Invalid user', stack: error });
+    }
+}
+
+async function GetPost(req, res){
+    const {post_id} = req.query;
+    try {
+        const post = await Post.findById(post_id);
+        const likes = await LikedPost.countDocuments({post: post_id});
+        const comments = await Comment.find({post: post_id});
+        res.json({ ...post, likes: likes, comments: comments });
+    } catch (error) {
+        res.status(500).json({ error: 'Invalid post', stack: error });
+    }
+}
+
+async function CommentPost(req, res){
+    const {post_id, comment} = req.body;
+    const post = await Post.findById(post_id);
+    const user_id = post.author;
+    try {
+        const com = await Comment.create({ content: comment, owner: user_id, post: post_id });
+        res.json({ com });
+    }catch (error) {
+        res.status(500).json({ error: 'Invalid Comment', stack: error });
+    }
+}
+
+async function SavePost(req, res){
+    const {post_id} = req.body;
+    const user_id = req.user;
+    try {
+        const savedPost = await SavedPost.create({ user: user_id, post: post_id });
+        res.json({ savedPost });
+    } catch (error) {
+        res.status(500).json({ error: 'Invalid post', stack: error });
+    }
+}
+
+async function GetPostRouter(req, res){
+    const {post_id} = req.query;
+    if(post_id) return GetPost(req, res);
+    FindPosts(req, res);
+}
+
+module.exports = { CreatePost, FindPosts, LikePost, PostLikedBy, CommentPost, SavePost, GetPost, GetPostRouter, PostSavedBy};
