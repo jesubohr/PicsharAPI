@@ -45,7 +45,6 @@ async function RegisterUser (req, res) {
     if (!username || !birthdate || !email || !password || !bio) {
         return res.status(400).json({ error: 'Please fill all the fields' });
     }
-
     const user = await User.findOne({ email });
     if (user) return res.status(400).json({ error: 'User already exists' });
 

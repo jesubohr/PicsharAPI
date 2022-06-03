@@ -7,5 +7,3 @@ mongoose.connect(MONGO_URI, {}, (err) => {
     if (err) console.error(err);
     else console.log('Connected to MongoDB');
 });
-
-//mongoose.connect('mongodb://localhost:27017/PicharAPI');
