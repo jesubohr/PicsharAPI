@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 
-const Request = require('../src/models/Request.model');
 const createServer = require('../src/server');
 require('dotenv').config();
 
@@ -45,26 +44,121 @@ describe('User Information', () => {
             .get('/users')
             .query({ user_id: decoded.sub });
         expect(res2.statusCode).toBe(200);
-        expect(res2.body).toHaveProperty('user');
         expect(res2.body.user).toHaveProperty('username');
         expect(res2.body.user).not.toHaveProperty('password');
         expect(res2.body.user).not.toHaveProperty('birthdate');
     });
 
 
-    it.todo('number of posts of user is correct');
+    it('number of posts of user is correct', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
 
-    it.todo('number of liked posts of user is correct');
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/users')
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('posts');
+        expect(res2.body.posts).toBeGreaterThanOrEqual(0);
+    });
 
-    it.todo('number of followers of user is correct');
+    it('number of liked posts of user is correct', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
 
-    it.todo('number of following of user is correct');
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/users')
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('liked');
+        expect(res2.body.posts).toBeGreaterThanOrEqual(0);
+    });
+
+    it('number of followers of user is correct', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
+
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/users')
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('followers');
+        expect(res2.body.posts).toBeGreaterThanOrEqual(0);
+    });
+
+    it('number of following of user is correct', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
+
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/users')
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('following');
+        expect(res2.body.posts).toBeGreaterThanOrEqual(0);
+    });
 
 
-    it.todo('list of followers of user');
+    it('list of followers of user', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
 
-    it.todo('list of following of user');
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/follows/followers')
+            .set('Authorization', `Bearer ${res.body.token}`)
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('followers');
+    });
 
+    it('list of following of user', async () => {
+        const user = { username: 'jameswo', password: 'loquendo' };
+        const res = await request(server)
+            .post('/users/login')
+            .send(user);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('token');
+
+        const decoded = await verifyToken(res.body.token);
+        const res2 = await request(server)
+            .get('/follows/following')
+            .set('Authorization', `Bearer ${res.body.token}`)
+            .query({ user_id: decoded.sub });
+        expect(res2.statusCode).toBe(200);
+        expect(res2.body).toHaveProperty('following');
+    });
+
+    // These tests are not working, but the underlying routes
+    // are working. The error that is thrown is:
+    // Socket hang up
+    // Is an error that I dont know how to fix, because I dont know
+    // what causes it. In comparison, the other test have similar 
+    // logic and code, but they are working.
 
     /* it('request to follow user', async () => {
         const user = { username: 'jameswo', password: 'loquendo' };

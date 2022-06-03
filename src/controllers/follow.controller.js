@@ -17,7 +17,7 @@ async function GetFollowing(req, res) {
             { $unwind: '$users' },
             { $project: { users: 1 } }
         ]);
-        return res.status(200).json(users);
+        return res.status(200).json({ following: users });
     } catch (error) {
         return res.status(500).json({ error: 'Invalid user_id', stack: error });
     }
@@ -38,7 +38,7 @@ async function GetFollowers(req, res) {
             { $unwind: '$users' },
             { $project: { users: 1 } }
         ]);
-        return res.status(200).json(users);
+        return res.status(200).json({ followers: users });
     } catch (error) {
         return res.status(500).json({ error: 'Invalid user_id', stack: error });
     }

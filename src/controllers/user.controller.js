@@ -12,7 +12,7 @@ async function UserInfo (req, res) {
         const followers = await Follow.countDocuments({followed: user_id});
         const following = await Follow.countDocuments({follower: user_id});
 
-        res.json({ ...user, likedPosts, userPosts, followers, following });
+        res.json({ user, liked: likedPosts, posts: userPosts, followers: followers, following: following });
     } catch (error) {
         res.status(500).json({ error: 'Invalid user_id', stack: error });
     }
